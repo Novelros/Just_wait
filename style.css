@@ -1,0 +1,422 @@
+:root {
+  --plastic: #eadfc8;
+  --page: #294237;
+  --text: #1e2b33;
+  --lcd: #f3ead8;
+  --lcd-ink: #1e2b33;
+  --border: #b84a35;
+  --focus: #f0c431;
+  --orange: #c84b32;
+  --side-width: 128px;
+  --position-size: 72px;
+  --system-width: 64px;
+  --system-height: 24px;
+  --font: "Times New Roman", Times, serif;
+  font-family: var(--font);
+  color: var(--text);
+  background: var(--page);
+}
+
+* { box-sizing: border-box; }
+html { min-width: 320px; }
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 24px 12px;
+  background: var(--page);
+}
+
+button { font: inherit; }
+
+button:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 4px;
+}
+
+button:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.screen[hidden] { display: none; }
+
+.handheld {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.device {
+  position: relative;
+  padding: 24px 28px 16px;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  background: var(--plastic);
+}
+
+.device__speaker {
+  position: absolute;
+  top: 12px;
+  left: 16px;
+  display: flex;
+  gap: 4px;
+  opacity: 0.45;
+}
+
+.device__speaker i {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--page);
+}
+
+.game-layout {
+  display: grid;
+  grid-template-columns: var(--side-width) 1fr var(--side-width);
+  align-items: stretch;
+  gap: 20px;
+}
+
+.side-controls {
+  display: flex;
+  min-width: 0;
+  padding: 8px 0 12px;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.system-controls {
+  display: grid;
+  gap: 24px;
+}
+
+.system-control {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.system-button,
+.position-button,
+.lcd-button { cursor: pointer; }
+
+.system-button,
+.position-button { padding: 0; }
+
+.system-button {
+  width: var(--system-width);
+  height: var(--system-height);
+  border: 2px solid var(--border);
+  border-radius: 4px;
+  background: var(--border);
+}
+
+.system-button:active {
+  background: var(--page);
+  transform: translateY(2px);
+}
+
+#sound-button[aria-pressed="false"] { background: var(--page); }
+
+.position-controls {
+  display: grid;
+  justify-content: center;
+  gap: 48px;
+}
+
+.position-button {
+  width: var(--position-size);
+  height: var(--position-size);
+  border: 5px solid var(--border);
+  border-radius: 50%;
+  background: var(--orange);
+  touch-action: manipulation;
+}
+
+.position-button:active,
+.position-button--pressed {
+  background: #b55405;
+  transform: translateY(2px);
+}
+
+.lcd-frame {
+  min-width: 0;
+  padding: 12px;
+  border: 3px solid var(--border);
+  border-radius: 8px;
+  background: var(--lcd-ink);
+}
+
+.lcd-screen {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 8 / 5;
+  border: 2px solid var(--lcd-ink);
+  border-radius: 4px;
+  background: var(--lcd);
+}
+
+#game-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+
+.screen {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  display: grid;
+  overflow-y: auto;
+  padding: 24px;
+  place-items: center;
+  color: var(--lcd-ink);
+  background: rgba(243, 234, 216, 0.95);
+}
+
+.screen__panel {
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+}
+
+.screen__panel--small { max-width: 480px; }
+
+.screen__art {
+  display: block;
+  width: min(400px, 72%);
+  margin: 0 auto 14px;
+  border: 3px solid var(--lcd-ink);
+  border-radius: 10px;
+  background: var(--lcd);
+  box-shadow: 0 6px 0 rgba(30, 43, 51, 0.18);
+}
+
+.screen__title {
+  margin: 0 0 12px;
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.screen__text {
+  max-width: 510px;
+  margin: 0 auto 16px;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.screen__result {
+  margin: 0 0 16px;
+  font-size: 1.25rem;
+}
+
+.screen__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.skin-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+  font-size: 0.8rem;
+}
+
+.skin-button {
+  padding: 4px 10px;
+  border: 1px solid var(--lcd-ink);
+  border-radius: 5px;
+  color: var(--lcd-ink);
+  background: transparent;
+  cursor: pointer;
+}
+
+.skin-button[aria-pressed="true"] {
+  color: var(--lcd);
+  background: var(--lcd-ink);
+}
+
+.screen__note {
+  margin: 12px 0 0;
+  font-size: 0.75rem;
+}
+
+.lcd-button {
+  min-width: 112px;
+  min-height: 40px;
+  padding: 8px 16px;
+  border: 2px solid var(--lcd-ink);
+  border-radius: 8px;
+  color: var(--lcd-ink);
+  background: rgba(255, 250, 238, 0.46);
+  font-weight: 700;
+}
+
+.lcd-button:active { transform: translate(2px, 2px); }
+
+.device__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 16px 0 0;
+  color: var(--page);
+  font-size: 0.66rem;
+}
+
+.device__serial {
+  padding: 4px 16px;
+  border: 1px solid var(--border);
+  border-radius: 0;
+}
+
+.sr-only {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  margin: -1px;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (hover: hover) {
+  .position-button:hover { filter: brightness(1.06); }
+
+  .lcd-button:hover {
+    color: var(--lcd);
+    background: var(--lcd-ink);
+  }
+}
+
+@media (max-width: 880px) {
+  :root {
+    --side-width: 96px;
+    --position-size: 56px;
+    --system-width: 56px;
+    --system-height: 20px;
+  }
+
+  .device { padding: 20px 16px 12px; }
+  .game-layout { gap: 12px; }
+  .system-control { font-size: 0.82rem; }
+  .position-controls { gap: 40px; }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --position-size: 48px;
+    --system-width: 40px;
+    --system-height: 16px;
+  }
+
+  body { padding: 12px 4px; }
+  .device__speaker { display: none; }
+
+  .device {
+    padding: 16px 12px 12px;
+    border-radius: 8px;
+  }
+
+  .game-layout {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 8px;
+  }
+
+  .lcd-frame {
+    grid-row: 1;
+    grid-column: 1 / -1;
+    padding: 8px;
+    border-radius: 8px;
+  }
+
+  .side-controls {
+    display: grid;
+    grid-template-rows: auto auto;
+    justify-items: center;
+    align-items: center;
+    padding: 0 4px;
+    gap: 10px;
+  }
+
+  .side-controls--left {
+    grid-row: 2;
+    grid-column: 1;
+  }
+
+  .side-controls--right {
+    grid-row: 2;
+    grid-column: 2;
+  }
+
+  .system-controls {
+    display: flex;
+    gap: 8px;
+  }
+
+  .system-control {
+    gap: 4px;
+    font-size: 0.58rem;
+  }
+
+  .position-controls {
+    display: flex;
+    gap: 8px;
+  }
+
+  .position-button { border-width: 3px; }
+
+  .screen { padding: 16px; }
+  .screen__art { width: 88%; }
+  .screen__title { font-size: 1.5rem; }
+  .screen__text { font-size: 0.8rem; }
+  .screen__note { font-size: 0.68rem; }
+
+  .device__footer {
+    padding: 12px 0 0;
+    font-size: 0.52rem;
+  }
+
+  .device__serial { padding: 4px 8px; }
+}
+
+@media (max-width: 360px) {
+  :root { --position-size: 40px; }
+
+  .side-controls {
+    padding: 0;
+    place-items: center;
+    gap: 8px;
+  }
+
+  .system-controls,
+  .position-controls { gap: 4px; }
+
+  .system-control span,
+  .screen__note { display: none; }
+
+  .screen { padding: 12px; }
+  .screen__title { font-size: 1.25rem; }
+
+  .screen__text {
+    margin-bottom: 8px;
+    font-size: 0.72rem;
+  }
+
+  .lcd-button {
+    min-width: 96px;
+    min-height: 32px;
+    padding: 4px 8px;
+  }
+}

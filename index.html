@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Браузерная версия игры «Ну, погоди!»: лови яйца и не давай им разбиться.">
+  <link rel="icon" href="data:,">
+  <title>Ну, погоди! — Электронная игра</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="js/engine.js" defer></script>
+  <script src="js/game.js" defer></script>
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+  <main class="handheld">
+    <div class="device">
+      <div class="device__speaker" aria-hidden="true">
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      </div>
+
+      <div class="game-layout">
+        <aside class="side-controls side-controls--left" aria-label="Левые позиции и выбор игры">
+          <div class="system-controls">
+            <div class="system-control">
+              <span id="side-game-a-label">Игра А</span>
+              <button class="system-button" id="side-start-a-button" type="button" aria-labelledby="side-game-a-label"></button>
+            </div>
+            <div class="system-control">
+              <span id="side-game-b-label">Игра Б</span>
+              <button class="system-button" id="side-start-b-button" type="button" aria-labelledby="side-game-b-label"></button>
+            </div>
+          </div>
+          <div class="position-controls" role="group" aria-label="Позиции слева">
+            <button class="position-button" type="button" data-position="left-top">
+              <span class="sr-only">Корзина слева вверху</span>
+            </button>
+            <button class="position-button" type="button" data-position="left-bottom">
+              <span class="sr-only">Корзина слева внизу</span>
+            </button>
+          </div>
+        </aside>
+
+        <div class="lcd-frame">
+          <div class="lcd-screen">
+            <canvas id="game-canvas">
+              Ваш браузер не поддерживает Canvas. Обновите браузер, чтобы начать игру.
+            </canvas>
+
+            <section class="screen" id="menu-screen" aria-labelledby="menu-title">
+              <div class="screen__panel">
+                <h2 class="screen__title" id="menu-title">Ну, погоди!</h2>
+                <p class="screen__text">
+                  Цель — набрать как можно больше очков. Каждые 10 очков темп растёт:
+                  яйца катятся быстрее и появляются чаще. Тёмные яйца Зайца ловить не нужно.
+                </p>
+                <img class="screen__art" src="scene.png" alt="Ретро-сцена с Волком, Зайцем и курами">
+                <div class="screen__actions">
+                  <button class="lcd-button" id="start-a-button" type="button">Игра А</button>
+                  <button class="lcd-button" id="start-b-button" type="button">Игра Б</button>
+                </div>
+                <div class="skin-controls" role="group" aria-label="Скин Волка">
+                  <span>Скин:</span>
+                  <button class="skin-button" id="skin-classic-button" type="button" aria-pressed="false">Старый</button>
+                  <button class="skin-button" id="skin-new-button" type="button" aria-pressed="true">Новый</button>
+                </div>
+                <p class="screen__note">А — 3 лотка · Б — 4 лотка и выше скорость</p>
+              </div>
+            </section>
+
+            <section class="screen" id="pause-screen" aria-labelledby="pause-title" hidden>
+              <div class="screen__panel screen__panel--small">
+                <h2 class="screen__title" id="pause-title">Пауза</h2>
+                <p class="screen__text">Нажми P или Esc, чтобы продолжить.</p>
+                <div class="screen__actions">
+                  <button class="lcd-button" id="resume-button" type="button">Дальше</button>
+                  <button class="lcd-button" id="pause-menu-button" type="button">Меню</button>
+                </div>
+              </div>
+            </section>
+
+            <section class="screen" id="gameover-screen" aria-labelledby="gameover-title" hidden>
+              <div class="screen__panel screen__panel--small">
+                <h2 class="screen__title" id="gameover-title">Вот так погоди!</h2>
+                <p class="screen__text" id="gameover-reason">Слишком много разбитых яиц.</p>
+                <p class="screen__result">Счёт: <strong id="gameover-score">0</strong></p>
+                <div class="screen__actions">
+                  <button class="lcd-button" id="restart-button" type="button">Ещё раз</button>
+                  <button class="lcd-button" id="gameover-menu-button" type="button">Меню</button>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <aside class="side-controls side-controls--right" aria-label="Правые позиции и настройки">
+          <div class="system-controls">
+            <div class="system-control">
+              <span>Пауза</span>
+              <button class="system-button" id="pause-button" type="button" aria-label="Поставить или снять паузу"></button>
+            </div>
+            <div class="system-control">
+              <span id="sound-label">Звук</span>
+              <button class="system-button" id="sound-button" type="button" aria-labelledby="sound-label" aria-pressed="true"></button>
+            </div>
+          </div>
+          <div class="position-controls" role="group" aria-label="Позиции справа">
+            <button class="position-button" type="button" data-position="right-top">
+              <span class="sr-only">Корзина справа вверху</span>
+            </button>
+            <button class="position-button" type="button" data-position="right-bottom">
+              <span class="sr-only">Корзина справа внизу</span>
+            </button>
+          </div>
+        </aside>
+      </div>
+
+      <div class="device__footer">
+        <span class="device__serial">Электроника ИМ-02</span>
+      </div>
+    </div>
+
+    <div class="sr-only">
+      <span id="score-value" aria-live="polite" aria-atomic="true">Счёт: 0</span>
+      <span id="lives-value" aria-live="polite" aria-atomic="true">Жизни: 3</span>
+      <span id="misses-value" aria-live="polite" aria-atomic="true">Промахи: 0</span>
+      <span id="record-value" aria-live="polite" aria-atomic="true">Рекорд: 0</span>
+    </div>
+  </main>
+</body>
+</html>
